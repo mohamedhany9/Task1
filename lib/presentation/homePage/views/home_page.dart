@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:taskgithub/core/styles/styles_manager.dart';
 import 'package:taskgithub/core/values/app_colors.dart';
 import 'package:taskgithub/presentation/homePage/controllers/home_controller.dart';
+import 'package:taskgithub/presentation/homePage/views/repo_details.dart';
 
 class HomeScreen extends GetView<HomeController> {
    HomeScreen({super.key});
@@ -38,8 +39,8 @@ class HomeScreen extends GetView<HomeController> {
                 SizedBox(width: 20.w,),
                 Text(
                   item.name,
-                  style: AppTextStyle.sfRegular.copyWith(
-                      fontSize: 16.sp, color: ThemeColors.blackColor),
+                  style: AppTextStyle.sfSemiBold.copyWith(
+                      fontSize: 14.sp, color: ThemeColors.whiteColor),
                 ),
               ],
             )),
@@ -80,62 +81,68 @@ class HomeScreen extends GetView<HomeController> {
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                      return Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 10.w, vertical: 10.h),
-                        margin: EdgeInsets.only(
-                            bottom: 16.h),
-                        decoration: BoxDecoration(
-                          color: ThemeColors.grayLightColor,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.7),
-                              spreadRadius: 2,
-                              blurRadius: 3,
-                              offset: Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            ClipOval(
-                              child: Image.network(controller.services.value![index].owner.avatarUrl,
-                                height: 40.h,
+                      return GestureDetector(
+                        onTap: (){
+                          controller.itemDetails = controller.services.value![index];
+                          Get.to(RepoDetailsScreen());
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10.w, vertical: 10.h),
+                          margin: EdgeInsets.only(
+                              bottom: 16.h),
+                          decoration: BoxDecoration(
+                            color: ThemeColors.grayLightColor,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.7),
+                                spreadRadius: 2,
+                                blurRadius: 3,
+                                offset: Offset(0, 3), // changes position of shadow
                               ),
-                            ),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  controller.services.value![index].name,
-                                  style: AppTextStyle.sfSemiBold.copyWith(
-                                      fontSize: 16.sp, color: ThemeColors.blackColor),
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              ClipOval(
+                                child: Image.network(controller.services.value![index].owner.avatarUrl,
+                                  height: 40.h,
                                 ),
-                                Container(
-                                  width: 250.w,
-                                  child: Text(
-                                    controller.services.value![index].description == null ? "" : controller.services.value![index].description!,
+                              ),
+                              SizedBox(
+                                width: 10.w,
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    controller.services.value![index].name,
                                     style: AppTextStyle.sfSemiBold.copyWith(
-                                        fontSize: 12.sp, color: ThemeColors.blackColor),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
+                                        fontSize: 16.sp, color: ThemeColors.blackColor),
                                   ),
-                                ),
-                                Text(
-                                  "Language : ${ controller.services.value![index].language == null ? ""
-                                      :controller.services.value![index].language!}, Visibility : ${controller.services.value![index].visibility}"
-                                 ,
-                                  style: AppTextStyle.sfRegular.copyWith(
-                                      fontSize: 10.sp, color: ThemeColors.blackColor),
-                                ),
-                              ],
-                            ),
-                          ],
+                                  Container(
+                                    width: 250.w,
+                                    child: Text(
+                                      controller.services.value![index].description == null ? "" : controller.services.value![index].description!,
+                                      style: AppTextStyle.sfSemiBold.copyWith(
+                                          fontSize: 12.sp, color: ThemeColors.blackColor),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Language : ${ controller.services.value![index].language == null ? ""
+                                        :controller.services.value![index].language!}, Visibility : ${controller.services.value![index].visibility}"
+                                   ,
+                                    style: AppTextStyle.sfRegular.copyWith(
+                                        fontSize: 10.sp, color: ThemeColors.blackColor),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     })

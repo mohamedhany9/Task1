@@ -16,6 +16,8 @@ class HomeController extends GetxController {
   final RxString error = RxString('');
   final Rx<List<GithubModel>?> imgList = Rx<List<GithubModel>?>(null);
 
+  late GithubModel itemDetails;
+
   Future<void> fetchServices() async {
     try {
       isLoading.value = true;

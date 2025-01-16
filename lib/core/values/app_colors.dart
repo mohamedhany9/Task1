@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class ThemeColors {
 
-  static final Color appColor = HexColor("#f57f08");
+  static final Color appColor = HexColor("#fab350");
   static final Color greenColor = HexColor("#29591D");
   static final Color grayColor = HexColor("#B1B1B1");
   static final Color grayLightColor = HexColor("#dddddd");
