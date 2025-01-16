@@ -16,7 +16,7 @@ class RepoDetailsScreen extends GetView<HomeController> {
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
-        title: const Text('Repo: repo1!'),
+        title:  Text(controller.itemDetails.name),
         actions: const [
           CloseButton(),
         ],
@@ -27,14 +27,11 @@ class RepoDetailsScreen extends GetView<HomeController> {
           children: [
             _buildRepoHeader(),
             _buildDescription(),
-            const Padding(
+             Padding(
               padding: EdgeInsets.all(16.0),
               child: Text(
                 'Commits:',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppTextStyle.sfRegular.copyWith(fontSize: 20.sp,color: ThemeColors.blackColor),
               ),
             ),
             _buildCommitsList(),
@@ -46,33 +43,42 @@ class RepoDetailsScreen extends GetView<HomeController> {
 
   Widget _buildRepoHeader() {
     return Container(
+      height: 150.h,
       padding: const EdgeInsets.all(16),
       margin: EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: ThemeColors.appColor,
         borderRadius: BorderRadius.circular(16)
       ),
+      alignment: Alignment.center,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Icon(
-            Icons.pets,  // GitHub cat icon placeholder
-            color: Colors.white,
-            size: 40,
-          ),
-          const SizedBox(width: 12),
-          const Text(
-            'repo1',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const Spacer(),
-          _buildStatItem(Icons.star, '3'),
-          _buildStatItem(Icons.call_split, '1'),
-          _buildStatItem(Icons.warning, '2'),
-          _buildStatItem(Icons.remove_red_eye, '4'),
+          Image.asset("assets/images/git.png",color: Colors.white,),
+          //const SizedBox(width: 12),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+               Text(
+                controller.itemDetails.name,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+           SizedBox(height: 10,),
+           Row(
+             children: [
+               _buildStatItem(Icons.star, '3'),
+               _buildStatItem(Icons.call_split, '1'),
+               _buildStatItem(Icons.warning, '2'),
+               _buildStatItem(Icons.remove_red_eye, '4'),
+             ],
+           )
+            ],
+          )
         ],
       ),
     );
@@ -81,15 +87,16 @@ class RepoDetailsScreen extends GetView<HomeController> {
 
   Widget _buildStatItem(IconData icon, String count) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 0),
       child: Row(
         children: [
           Icon(icon, color: Colors.white, size: 20),
-          const SizedBox(width: 4),
+          const SizedBox(width: 2),
           Text(
             count,
             style: const TextStyle(color: Colors.white),
           ),
+          const SizedBox(width: 8),
         ],
       ),
     );
@@ -127,12 +134,9 @@ class RepoDetailsScreen extends GetView<HomeController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+             Text(
               'Initial commit',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: AppTextStyle.sfSemiBold.copyWith(fontSize: 18.sp,color: ThemeColors.blackColor),
             ),
             const SizedBox(height: 12),
             Row(
@@ -143,20 +147,30 @@ class RepoDetailsScreen extends GetView<HomeController> {
                   child: Icon(Icons.person),
                 ),
                 const SizedBox(width: 12),
-                const Text(
-                  'John Doe committed 1 hour ago',
-                  style: TextStyle(color: Colors.grey),
-                ),
-                const Spacer(),
-                Icon(
-                  isSuccess ? Icons.check_circle : Icons.cancel,
-                  color: isSuccess ? Colors.green : Colors.red,
-                ),
-                const Text(' 1/1'),
+               Column(
+                 mainAxisAlignment: MainAxisAlignment.start,
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                 children: [
+                   const Text(
+                     'John Doe committed 1 hour ago',
+                     style: TextStyle(color: Colors.grey),
+                   ),
+                  Row(
+                    children: [
+                      Icon(
+                        isSuccess ? Icons.check_circle : Icons.cancel,
+                        color: isSuccess ? Colors.green : Colors.red,
+                      ),
+                      const Text(' 1/1'),
+                    ],
+                  )
+                 ],
+               )
               ],
             ),
             const SizedBox(height: 12),
             Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 if (isVerified)
                   Container(
@@ -170,14 +184,14 @@ class RepoDetailsScreen extends GetView<HomeController> {
                       style: TextStyle(color: Colors.green),
                     ),
                   ),
-                const SizedBox(width: 8),
+                const SizedBox(width: 18),
                 const Text(
                   '123456',
                   style: TextStyle(color: Colors.grey),
                 ),
-                const Spacer(),
+                const SizedBox(width: 18),
                 const Icon(Icons.copy, color: Colors.grey),
-                const SizedBox(width: 8),
+                const SizedBox(width: 18),
                 const Icon(Icons.upload, color: Colors.grey),
               ],
             ),

@@ -55,7 +55,8 @@ class HomeScreen extends GetView<HomeController> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(child: Text("Repositories",style: AppTextStyle.sfRegular.copyWith(fontSize: 20.sp,color: ThemeColors.blackColor),)),
+              Center(child: Text("Repositories",style:
+              AppTextStyle.sfRegular.copyWith(fontSize: 20.sp,color: ThemeColors.blackColor),)),
               SizedBox(height: 10.h,),
               CarouselSlider(
                 options: CarouselOptions(
