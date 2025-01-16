@@ -33,7 +33,8 @@ class HomeScreen extends GetView<HomeController> {
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
             child: Row(
               children: <Widget>[
-                Image.asset('assets/images/Rectangle1.png', fit: BoxFit.cover, width: 50.0),
+                ClipOval(
+                    child: Image.network(item.owner.avatarUrl, fit: BoxFit.cover, width: 50.0)),
                 SizedBox(width: 20.w,),
                 Text(
                   item.name,
@@ -53,13 +54,12 @@ class HomeScreen extends GetView<HomeController> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(child: Text("Repos",style: AppTextStyle.sfRegular.copyWith(fontSize: 20.sp,color: ThemeColors.blackColor),)),
+              Center(child: Text("Repositories",style: AppTextStyle.sfRegular.copyWith(fontSize: 20.sp,color: ThemeColors.blackColor),)),
               SizedBox(height: 10.h,),
-
               CarouselSlider(
                 options: CarouselOptions(
                   height: 100.h,
-                  aspectRatio: 2.0,
+                  aspectRatio: 0.5,
                   enlargeCenterPage: true,
                   scrollDirection: Axis.horizontal,
                   autoPlay: true,
@@ -86,7 +86,7 @@ class HomeScreen extends GetView<HomeController> {
                         margin: EdgeInsets.only(
                             bottom: 16.h),
                         decoration: BoxDecoration(
-                          color: ThemeColors.appColor,
+                          color: ThemeColors.grayLightColor,
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           boxShadow: [
                             BoxShadow(
@@ -99,19 +99,41 @@ class HomeScreen extends GetView<HomeController> {
                         ),
                         child: Row(
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: Image.asset('assets/images/Rectangle1.png',
+                            ClipOval(
+                              child: Image.network(controller.services.value![index].owner.avatarUrl,
                                 height: 40.h,
                               ),
                             ),
                             SizedBox(
                               width: 10.w,
                             ),
-                            Text(
-                              controller.services.value![index].name,
-                              style: AppTextStyle.sfRegular.copyWith(
-                                  fontSize: 16.sp, color: ThemeColors.blackColor),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  controller.services.value![index].name,
+                                  style: AppTextStyle.sfSemiBold.copyWith(
+                                      fontSize: 16.sp, color: ThemeColors.blackColor),
+                                ),
+                                Container(
+                                  width: 250.w,
+                                  child: Text(
+                                    controller.services.value![index].description == null ? "" : controller.services.value![index].description!,
+                                    style: AppTextStyle.sfSemiBold.copyWith(
+                                        fontSize: 12.sp, color: ThemeColors.blackColor),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                ),
+                                Text(
+                                  "Language : ${ controller.services.value![index].language == null ? ""
+                                      :controller.services.value![index].language!}, Visibility : ${controller.services.value![index].visibility}"
+                                 ,
+                                  style: AppTextStyle.sfRegular.copyWith(
+                                      fontSize: 10.sp, color: ThemeColors.blackColor),
+                                ),
+                              ],
                             ),
                           ],
                         ),
