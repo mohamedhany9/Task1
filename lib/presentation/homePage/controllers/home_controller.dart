@@ -25,10 +25,7 @@ class HomeController extends GetxController {
 
   Future<void> fetchServices() async {
 
-    print(storage.read('github'));
    try {
-
-
 
     final dynamic storedData = storage.read('github');
     if (storedData != null) {
@@ -50,7 +47,6 @@ class HomeController extends GetxController {
 
     } catch (e) {
       error.value = e.toString();
-      print('Error fetching services: $e');
     } finally {
       isLoading.value = false;
     }
@@ -64,9 +60,5 @@ class HomeController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
 }

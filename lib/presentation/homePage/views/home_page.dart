@@ -3,59 +3,56 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:taskgithub/core/styles/styles_manager.dart';
 import 'package:taskgithub/core/values/app_colors.dart';
 import 'package:taskgithub/presentation/homePage/controllers/home_controller.dart';
 import 'package:taskgithub/presentation/homePage/views/repo_details.dart';
 
 class HomeScreen extends GetView<HomeController> {
-   HomeScreen({super.key});
+   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     controller.obs;
     final List<Widget> imageSliders = controller.imgList.value!
         .map((item) => Container(
-      child: Container(
-        margin: EdgeInsets.all(5.0),
-        padding: EdgeInsets.all(15.0),
-        decoration: BoxDecoration(
-          color: ThemeColors.appColor,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.7),
-              spreadRadius: 2,
-              blurRadius: 3,
-              offset: Offset(0, 3), // changes position of shadow
-            ),
-          ],
-        ),
-        child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-            child: Row(
-              children: <Widget>[
-                controller.connectivityResult.contains(ConnectivityResult.none)?
-                ClipOval(
-                  child: Image.asset("assets/images/Rectangle1.png",
-                    height: 40.h,
+          margin: const EdgeInsets.all(5.0),
+          padding: const EdgeInsets.all(15.0),
+          decoration: BoxDecoration(
+            color: ThemeColors.appColor,
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.7),
+                spreadRadius: 2,
+                blurRadius: 3,
+                offset: const Offset(0, 3), // changes position of shadow
+              ),
+            ],
+          ),
+          child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+              child: Row(
+                children: <Widget>[
+                  controller.connectivityResult.contains(ConnectivityResult.none)?
+                  ClipOval(
+                    child: Image.asset("assets/images/Rectangle1.png",
+                      height: 40.h,
+                    ),
+                  ): ClipOval(
+                    child: Image.network(item.owner.avatarUrl,
+                      height: 40.h,
+                    ),
                   ),
-                ): ClipOval(
-                  child: Image.network(item.owner.avatarUrl,
-                    height: 40.h,
+                  SizedBox(width: 20.w,),
+                  Text(
+                    item.name,
+                    style: AppTextStyle.sfSemiBold.copyWith(
+                        fontSize: 14.sp, color: ThemeColors.whiteColor),
                   ),
-                ),
-                SizedBox(width: 20.w,),
-                Text(
-                  item.name,
-                  style: AppTextStyle.sfSemiBold.copyWith(
-                      fontSize: 14.sp, color: ThemeColors.whiteColor),
-                ),
-              ],
-            )),
-      ),
-    ))
+                ],
+              )),
+        ))
         .toList();
     return Scaffold(
       backgroundColor: ThemeColors.whiteColor,
@@ -90,12 +87,12 @@ class HomeScreen extends GetView<HomeController> {
                     ListView.builder(
                         itemCount: controller.services.value!.length,
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: (){
                           controller.itemDetails = controller.services.value![index];
-                          Get.to(RepoDetailsScreen());
+                          Get.to(const RepoDetailsScreen());
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(
@@ -104,13 +101,13 @@ class HomeScreen extends GetView<HomeController> {
                               bottom: 16.h),
                           decoration: BoxDecoration(
                             color: ThemeColors.grayLightColor,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderRadius: const BorderRadius.all(Radius.circular(10)),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.7),
                                 spreadRadius: 2,
                                 blurRadius: 3,
-                                offset: Offset(0, 3), // changes position of shadow
+                                offset: const Offset(0, 3), // changes position of shadow
                               ),
                             ],
                           ),
@@ -138,7 +135,7 @@ class HomeScreen extends GetView<HomeController> {
                                     style: AppTextStyle.sfSemiBold.copyWith(
                                         fontSize: 16.sp, color: ThemeColors.blackColor),
                                   ),
-                                  Container(
+                                  SizedBox(
                                     width: 250.w,
                                     child: Text(
                                       controller.services.value![index].description == null ? "" : controller.services.value![index].description!,

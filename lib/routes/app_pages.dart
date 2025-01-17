@@ -22,7 +22,7 @@ class AppPages {
 
     GetPage(
       name: _Paths.home,
-      page: () =>  HomeScreen(),
+      page: () =>  const HomeScreen(),
       bindings: [
         HomeBindings(),
       ],

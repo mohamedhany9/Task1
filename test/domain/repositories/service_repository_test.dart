@@ -1,11 +1,9 @@
-// test/domain/repositories/service_repository_test.dart
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:taskgithub/data/model/github_model.dart';
 import 'package:taskgithub/domain/repositories/service_repository.dart';
 
-// Create a mock implementation of ServiceRepository
 @GenerateNiceMocks([MockSpec<ServiceRepository>()])
 import 'service_repository_test.mocks.dart';
 

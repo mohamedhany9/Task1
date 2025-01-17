@@ -12,7 +12,7 @@ class ServiceApiService {
     try {
       final resopnse = await dio.get('${AppConstants.baseUrl}repos',
           options: Options());
-      print(resopnse.data);
+
       List<GithubModel> data = (resopnse.data as List)
           .map((json) => GithubModel.fromJson(json))
           .toList();

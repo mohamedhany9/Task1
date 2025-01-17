@@ -5,7 +5,7 @@ class LocalDataSource {
   final DatabaseHelper dbHelper;
 
   LocalDataSource({DatabaseHelper? dbHelper})
-      : this.dbHelper = dbHelper ?? DatabaseHelper.instance;
+      : dbHelper = dbHelper ?? DatabaseHelper.instance;
 
   Future<List<GithubModel>> getLocalRepositories() async {
     return await dbHelper.getRepositories();
