@@ -1,14 +1,13 @@
-import 'package:carousel_slider/carousel_slider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:taskgithub/core/styles/styles_manager.dart';
 import 'package:taskgithub/core/values/app_colors.dart';
-import 'package:taskgithub/core/values/app_colors.dart';
 import 'package:taskgithub/presentation/homePage/controllers/home_controller.dart';
 
 class RepoDetailsScreen extends GetView<HomeController> {
-  RepoDetailsScreen({super.key});
+  const RepoDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,15 +25,21 @@ class RepoDetailsScreen extends GetView<HomeController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildRepoHeader(),
-            _buildDescription(),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                'Description: ${controller.itemDetails.description}',
+                style: const TextStyle(fontSize: 16),
+              ),
+            ),
              Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Text(
                 'Commits:',
                 style: AppTextStyle.sfRegular.copyWith(fontSize: 20.sp,color: ThemeColors.blackColor),
               ),
             ),
-            _buildCommitsList(),
+            _buildCommitsList(controller),
           ],
         ),
       ),
@@ -45,7 +50,7 @@ class RepoDetailsScreen extends GetView<HomeController> {
     return Container(
       height: 150.h,
       padding: const EdgeInsets.all(16),
-      margin: EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: ThemeColors.appColor,
         borderRadius: BorderRadius.circular(16)
@@ -62,19 +67,19 @@ class RepoDetailsScreen extends GetView<HomeController> {
             children: [
                Text(
                 controller.itemDetails.name,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-           SizedBox(height: 10,),
+           const SizedBox(height: 10,),
            Row(
              children: [
                _buildStatItem(Icons.star, '3'),
-               _buildStatItem(Icons.call_split, '1'),
+               _buildStatItem(Icons.call_split,   controller.itemDetails.forks.toString()),
                _buildStatItem(Icons.warning, '2'),
-               _buildStatItem(Icons.remove_red_eye, '4'),
+               _buildStatItem(Icons.remove_red_eye, controller.itemDetails.watchers.toString()),
              ],
            )
             ],
@@ -102,31 +107,20 @@ class RepoDetailsScreen extends GetView<HomeController> {
     );
   }
 
-  Widget _buildDescription() {
-    return const Padding(
-      padding: EdgeInsets.all(16),
-      child: Text(
-        'Description: This is repo1',
-        style: TextStyle(fontSize: 16),
-      ),
-    );
-  }
 
-  Widget _buildCommitsList() {
+  Widget _buildCommitsList(HomeController controller) {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: 4,
       itemBuilder: (context, index) {
-        bool isVerified = index < 2;
-        bool isSuccess = index < 3;
-        return _buildCommitItem(isVerified: isVerified, isSuccess: isSuccess);
+        return _buildCommitItem(controller);
       },
     );
   }
 
 
-  Widget _buildCommitItem({required bool isVerified, required bool isSuccess}) {
+  Widget _buildCommitItem(HomeController controller) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Padding(
@@ -141,27 +135,27 @@ class RepoDetailsScreen extends GetView<HomeController> {
             const SizedBox(height: 12),
             Row(
               children: [
-                const CircleAvatar(
+                 CircleAvatar(
                   radius: 20,
                   backgroundColor: Colors.grey,
-                  child: Icon(Icons.person),
+                  child: Image.network(controller.itemDetails.owner.avatarUrl),
                 ),
                 const SizedBox(width: 12),
-               Column(
+               const Column(
                  mainAxisAlignment: MainAxisAlignment.start,
                  crossAxisAlignment: CrossAxisAlignment.start,
                  children: [
-                   const Text(
+                   Text(
                      'John Doe committed 1 hour ago',
                      style: TextStyle(color: Colors.grey),
                    ),
                   Row(
                     children: [
                       Icon(
-                        isSuccess ? Icons.check_circle : Icons.cancel,
-                        color: isSuccess ? Colors.green : Colors.red,
+                        Icons.check_circle,
+                        color:  Colors.green,
                       ),
-                      const Text(' 1/1'),
+                      Text(' 1/1'),
                     ],
                   )
                  ],
@@ -172,7 +166,6 @@ class RepoDetailsScreen extends GetView<HomeController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (isVerified)
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
@@ -185,9 +178,9 @@ class RepoDetailsScreen extends GetView<HomeController> {
                     ),
                   ),
                 const SizedBox(width: 18),
-                const Text(
-                  '123456',
-                  style: TextStyle(color: Colors.grey),
+                 Text(
+                  controller.itemDetails.id.toString(),
+                  style: const TextStyle(color: Colors.grey),
                 ),
                 const SizedBox(width: 18),
                 const Icon(Icons.copy, color: Colors.grey),
