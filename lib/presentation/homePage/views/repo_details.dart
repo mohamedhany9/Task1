@@ -1,4 +1,5 @@
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -135,7 +136,12 @@ class RepoDetailsScreen extends GetView<HomeController> {
             const SizedBox(height: 12),
             Row(
               children: [
-                 CircleAvatar(
+                controller.connectivityResult.contains(ConnectivityResult.none)?
+                CircleAvatar(
+                  radius: 20,
+                  backgroundColor: Colors.grey,
+                  child: Image.asset('assets/images/Rectangle1.png'),
+                ):  CircleAvatar(
                   radius: 20,
                   backgroundColor: Colors.grey,
                   child: Image.network(controller.itemDetails.owner.avatarUrl),

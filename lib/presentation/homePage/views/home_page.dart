@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:taskgithub/core/styles/styles_manager.dart';
 import 'package:taskgithub/core/values/app_colors.dart';
 import 'package:taskgithub/presentation/homePage/controllers/home_controller.dart';
@@ -34,8 +36,16 @@ class HomeScreen extends GetView<HomeController> {
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
             child: Row(
               children: <Widget>[
+                controller.connectivityResult.contains(ConnectivityResult.none)?
                 ClipOval(
-                    child: Image.network(item.owner.avatarUrl, fit: BoxFit.cover, width: 50.0)),
+                  child: Image.asset("assets/images/Rectangle1.png",
+                    height: 40.h,
+                  ),
+                ): ClipOval(
+                  child: Image.network(item.owner.avatarUrl,
+                    height: 40.h,
+                  ),
+                ),
                 SizedBox(width: 20.w,),
                 Text(
                   item.name,
@@ -106,7 +116,12 @@ class HomeScreen extends GetView<HomeController> {
                           ),
                           child: Row(
                             children: [
+                              controller.connectivityResult.contains(ConnectivityResult.none)?
                               ClipOval(
+                                child: Image.asset("assets/images/Rectangle1.png",
+                                  height: 40.h,
+                                ),
+                              ): ClipOval(
                                 child: Image.network(controller.services.value![index].owner.avatarUrl,
                                   height: 40.h,
                                 ),
